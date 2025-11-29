@@ -37,7 +37,7 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["apps/eco-e2e/**/*"]
+      "exclude": ["apps/eco-e2e/**/*", "apps/users-e2e/**/*"]
     }
   ]
 }

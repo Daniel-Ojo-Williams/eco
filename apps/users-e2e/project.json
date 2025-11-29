@@ -1,17 +1,17 @@
 {
-  "name": "eco-e2e",
+  "name": "users-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "implicitDependencies": ["eco"],
+  "implicitDependencies": ["users"],
   "targets": {
     "e2e": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{e2eProjectRoot}"],
       "options": {
-        "jestConfig": "apps/eco-e2e/jest.config.cts",
+        "jestConfig": "apps/users-e2e/jest.config.cts",
         "passWithNoTests": true
       },
-      "dependsOn": ["eco:build", "eco:serve"]
+      "dependsOn": ["users:build", "users:serve"]
     }
   }
 }

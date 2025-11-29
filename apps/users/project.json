@@ -1,7 +1,7 @@
 {
-  "name": "eco",
+  "name": "users",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/eco/src",
+  "sourceRoot": "apps/users/src",
   "projectType": "application",
   "tags": [],
   "targets": {
@@ -10,7 +10,7 @@
       "options": {
         "command": "webpack-cli build",
         "args": ["--node-env=production"],
-        "cwd": "apps/eco"
+        "cwd": "apps/users"
       },
       "configurations": {
         "development": {
@@ -23,8 +23,8 @@
       "cache": true,
       "executor": "@nx/js:prune-lockfile",
       "outputs": [
-        "{workspaceRoot}/dist/apps/eco/package.json",
-        "{workspaceRoot}/dist/apps/eco/pnpm-lock.yaml"
+        "{workspaceRoot}/dist/apps/users/package.json",
+        "{workspaceRoot}/dist/apps/users/pnpm-lock.yaml"
       ],
       "options": {
         "buildTarget": "build"
@@ -33,7 +33,7 @@
     "copy-workspace-modules": {
       "dependsOn": ["build"],
       "cache": true,
-      "outputs": ["{workspaceRoot}/dist/apps/eco/workspace_modules"],
+      "outputs": ["{workspaceRoot}/dist/apps/users/workspace_modules"],
       "executor": "@nx/js:copy-workspace-modules",
       "options": {
         "buildTarget": "build"
@@ -49,15 +49,15 @@
       "defaultConfiguration": "development",
       "dependsOn": ["build"],
       "options": {
-        "buildTarget": "eco:build",
+        "buildTarget": "users:build",
         "runBuildTargetDependencies": false
       },
       "configurations": {
         "development": {
-          "buildTarget": "eco:build:development"
+          "buildTarget": "users:build:development"
         },
         "production": {
-          "buildTarget": "eco:build:production"
+          "buildTarget": "users:build:production"
         }
       }
     },

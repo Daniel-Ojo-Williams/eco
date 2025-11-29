@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@eco/common": ["libs/common/src/index.ts"],
+      "@eco/grpc": ["libs/grpc/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
