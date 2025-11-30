@@ -9,9 +9,11 @@ export class ValidationError extends Error {
     }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ClassType<T = any> =  new (...args: unknown[]) => T
+
 export const ValidatedBody = createParamDecorator(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async (dtoClass: InstanceType<any>, ctx: ExecutionContext) => {
+    async (dtoClass: ClassType, ctx: ExecutionContext) => {
         const rpcContext = ctx.switchToRpc();
         const data = rpcContext.getData();
 

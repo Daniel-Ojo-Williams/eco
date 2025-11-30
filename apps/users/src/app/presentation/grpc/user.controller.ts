@@ -1,6 +1,6 @@
 import { Controller } from "@nestjs/common";
 import { UserServiceControllerMethods, UserServiceController, UserResponse, LoginRequest, GetUserRequest, LoginResponse, UpdateProfileRequest, ValidateTokenRequest, ValidateTokenResponse, VerifyEmailRequest } from "@eco/grpc";
-import { GetUserUseCase, LoginUserUseCase, RegisterUserUseCase, RegisterUserDto } from "../../applications";
+import { GetUserUseCase, LoginUserUseCase, RegisterUserUseCase, RegisterUserDto, LoginUserDto, GetUserDto } from "../../applications";
 import { RpcException } from "@nestjs/microservices";
 import { status } from "@grpc/grpc-js";
 import { ValidatedBody } from "@eco/common";
@@ -22,7 +22,7 @@ export class UserGrpcController implements UserServiceController {
         }
     }
 
-    async login(request: LoginRequest): Promise<LoginResponse> {
+    async login(@ValidatedBody(LoginUserDto) request: LoginUserDto): Promise<LoginResponse> {
         const response = await this.loginUserUsecase.execute(request);
 
         return {
@@ -34,7 +34,7 @@ export class UserGrpcController implements UserServiceController {
         }
     }
 
-    async getUser(request: GetUserRequest): Promise<UserResponse> {
+    async getUser(@ValidatedBody(GetUserDto) request: GetUserDto): Promise<UserResponse> {
         const response = await this.getUserUseCase.execute(request.id);
 
         return {
