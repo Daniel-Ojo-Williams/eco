@@ -1,9 +1,10 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { IUserRepository, USER_REPOSITORY, UserNotFoundException } from "../../domain";
 import { UserResponseDto } from "../dto";
+import { IGetUserUseCase } from "../ports";
 
 @Injectable()
-export class GetUserUseCase {
+export class GetUserUseCase implements IGetUserUseCase {
     constructor(
         @Inject(USER_REPOSITORY) private readonly userRepository: IUserRepository
     ) {}
