@@ -25,3 +25,17 @@ export class InvalidCredentialsException extends UserDomainException {
         this.name = "InvalidCredentialsException";
     }
 }
+
+export class AccountDeactivateException extends UserDomainException {
+    constructor() {
+        super("Your account has been deactivated. Please contact support.");
+        this.name = "AccountDeactivateException";
+    }
+}
+
+export class EmailNotVerifiedException  extends UserDomainException {
+    constructor() {
+        super("Your email has not been verified. Please check your email for verification.");
+        this.name = "EmailNotVerifiedException";
+    }
+}
