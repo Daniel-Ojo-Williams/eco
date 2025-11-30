@@ -37,7 +37,11 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["apps/eco-e2e/**/*", "apps/users-e2e/**/*"]
+      "exclude": [
+        "apps/eco-e2e/**/*",
+        "apps/users-e2e/**/*",
+        "apps/api-gateway-e2e/**/*"
+      ]
     }
   ],
   "targetDefaults": {
