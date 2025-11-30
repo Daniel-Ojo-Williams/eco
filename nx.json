@@ -39,5 +39,18 @@
       },
       "exclude": ["apps/eco-e2e/**/*", "apps/users-e2e/**/*"]
     }
-  ]
+  ],
+  "targetDefaults": {
+    "build": {
+      "options": {
+        "assets": [
+          {
+            "glob": "*.proto",
+            "input": "libs/grpc/src/proto",
+            "output": "proto"
+          }
+        ]
+      }
+    }
+  }
 }

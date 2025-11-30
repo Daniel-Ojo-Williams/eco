@@ -1,13 +1,14 @@
 import { registerAs } from "@nestjs/config";
-import { DataSourceOptions } from "typeorm";
+import * as Schemas from "../persistence/typeorm/schemas";
 
-export default registerAs("database", (): DataSourceOptions => ({
-    type: 'postgres',
+export default registerAs("database", () => ({
+    type: 'postgres' as const,
     host: process.env.DB_HOST,
     port: parseInt(process.env.DB_PORT),
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     migrations: ["dist/infrastructure/persistence/migrations/*.js"],
-    entities: ["dist/**/*.schema.js"],
+    entities: Object.values(Schemas),
+    synchronize: true
 }))
