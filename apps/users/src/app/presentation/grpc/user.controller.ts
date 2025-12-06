@@ -1,6 +1,6 @@
 import { Controller } from "@nestjs/common";
 import { UserServiceControllerMethods, UserServiceController, UserResponse, LoginRequest, GetUserRequest, LoginResponse, UpdateProfileRequest, ValidateTokenRequest, ValidateTokenResponse, VerifyEmailRequest } from "@eco/grpc";
-import { GetUserUseCase, LoginUserUseCase, RegisterUserUseCase, RegisterUserDto, LoginUserDto, GetUserDto } from "../../applications";
+import { GetUserUseCase, LoginUserUseCase, RegisterUserUseCase, RegisterUserDto, LoginUserDto, GetUserDto, VerifyEmailUseCase, UpdateProfileUseCase } from "../../applications";
 import { RpcException } from "@nestjs/microservices";
 import { status } from "@grpc/grpc-js";
 import { ValidatedBody } from "@eco/common";
@@ -12,6 +12,8 @@ export class UserGrpcController implements UserServiceController {
         private readonly registerUserUsecase: RegisterUserUseCase,
         private readonly loginUserUsecase: LoginUserUseCase,
         private readonly getUserUseCase: GetUserUseCase,
+        private readonly verifyEmailUseCase: VerifyEmailUseCase,
+        private readonly updateProfileUseCase: UpdateProfileUseCase,
     ) {}
 
     async register(@ValidatedBody(RegisterUserDto) request: RegisterUserDto): Promise<UserResponse> {
@@ -44,17 +46,19 @@ export class UserGrpcController implements UserServiceController {
     }
 
     async updateProfile(request: UpdateProfileRequest): Promise<UserResponse> {
-        throw new RpcException({
-            code: status.UNIMPLEMENTED,
-            message: "UpdateProfile not yet implemented."
-        });
+        const response = await this.updateProfileUseCase.execute(request.id, request);
+        return {
+            ...response,
+            createdAt: response.createdAt.toISOString(),
+        }
     }
 
     async verifyEmail(request: VerifyEmailRequest): Promise<UserResponse> {
-        throw new RpcException({
-            code: status.UNIMPLEMENTED,
-            message: "VerifyEmail not yet implemented."
-        });
+        const response = await this.verifyEmailUseCase.execute(request.id);
+        return {
+            ...response,
+            createdAt: response.createdAt.toISOString(),
+        }
     }
 
     async validateToken(request: ValidateTokenRequest): Promise<ValidateTokenResponse> {

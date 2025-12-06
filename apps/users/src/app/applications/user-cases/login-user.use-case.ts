@@ -19,8 +19,6 @@ export class LoginUserUseCase {
 
         if (!passwordMatch) throw new InvalidCredentialsException();
 
-        if (!user.getIsEmailVerified()) throw new EmailNotVerifiedException();
-
         if (!user.getIsActive()) throw new AccountDeactivateException();
 
         const tokens = await this.tokenGenerator.generateTokenPair({ email: user.getEmail(), roles: user.getRoles(), userId: user.id })

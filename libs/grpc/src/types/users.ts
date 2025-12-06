@@ -61,6 +61,7 @@ export interface UserResponse {
   isActive: boolean;
   isEmailVerified: boolean;
   createdAt: string;
+  fullName: string;
 }
 
 export const USERS_PACKAGE_NAME = "users";

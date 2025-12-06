@@ -1,8 +1,9 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { GET_USER_USE_CASE, IGetUserUseCase, ITokenGenerator, TokenPair, TokenPayload } from "../../../applications";
+import { GET_USER_USE_CASE, IGetUserUseCase, ITokenGenerator, TokenPair } from "../../../applications";
 import { JwtService, JwtSignOptions } from "@nestjs/jwt";
 import { ConfigType } from "@nestjs/config";
 import jwtConfig from "../../config/jwt.config";
+import { TokenPayload } from "@eco/common";
 
 @Injectable()
 export class JwtTokenGenerator implements ITokenGenerator {

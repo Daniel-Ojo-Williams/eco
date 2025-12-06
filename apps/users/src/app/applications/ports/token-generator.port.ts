@@ -1,8 +1,4 @@
-export interface TokenPayload {
-    userId: string;
-    email: string;
-    roles: string[];
-}
+import { TokenPayload } from "@eco/common";
 
 export interface TokenPair {
     accessToken: string;

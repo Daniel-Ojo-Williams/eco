@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArgumentsHost, Catch, RpcExceptionFilter } from "@nestjs/common";
 import { Observable, throwError } from "rxjs";
 import { RpcException } from "@nestjs/microservices";
@@ -9,14 +10,20 @@ import { DomainException } from "../exceptions";
 export class GrpcExceptionFilter implements RpcExceptionFilter {
     catch (exception: any, host: ArgumentsHost): Observable<any> {
         if (exception instanceof RpcException) {
-            return throwError(() => exception.getError())
+          const err = exception.getError() as any;
+
+          return throwError(() => ({
+            code: err.code ?? status.UNKNOWN,
+            message: err.message ?? 'RPC Error',
+            details: err.details ?? null,
+          }));
         }
 
         if (exception instanceof ValidationError) {
             return throwError(() => {
               return {
                 code: status.INVALID_ARGUMENT,
-                message: exception.message,
+                details: exception.message,
               }  
             })
         }
@@ -25,7 +32,7 @@ export class GrpcExceptionFilter implements RpcExceptionFilter {
             return throwError(() => {
               return {
                 code: exception.statusCode,
-                message: exception.message,
+                details: exception.message,
                 domain: exception.domainName,
                 errorName: exception.name,
               }  
@@ -35,7 +42,7 @@ export class GrpcExceptionFilter implements RpcExceptionFilter {
         if (exception instanceof Error) {
             return throwError(() => ({
                 code: status.INTERNAL,
-                message: exception.message,
+                details: exception.message,
             }))
         }
 

@@ -16,6 +16,11 @@ export class UserRepository implements IUserRepository {
         await this.ormRepository.save(schema);
     }
 
+    async update(user: User): Promise<void> {
+        const schema = UserMapper.toSchema(user);
+        await this.ormRepository.update(schema.id, schema);
+    }
+
     async findByEmail(email: string): Promise<User | null> {
         const schema = await this.ormRepository.findOneBy({ email });
         if (!schema) return null;

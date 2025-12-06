@@ -3,6 +3,7 @@ import { User } from "../entities";
 export interface IUserRepository {
     save(user: User): Promise<void>;
     findById(id: string): Promise<User | null>;
+    update(user: User): Promise<void>;
     findByEmail(email: string): Promise<User | null>;
     existsByEmail(email: string): Promise<boolean>;
     findAll(): Promise<User[]>;

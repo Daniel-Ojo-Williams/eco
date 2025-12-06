@@ -62,4 +62,5 @@ message UserResponse {
     bool is_active = 6;
     bool is_email_verified = 7;
     string created_at = 8;
+    string full_name = 9;
 }

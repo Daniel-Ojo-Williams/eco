@@ -7,7 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserSchema } from './infrastructure/persistence/typeorm/schemas/user.schema';
 import { JwtModule } from '@nestjs/jwt';
 import { UserGrpcController } from './presentation/grpc/user.controller';
-import { GET_USER_USE_CASE, GetUserUseCase, LoginUserUseCase, PASSWORD_HASHER, RegisterUserUseCase, TOKEN_GENERATOR } from './applications';
+import { GET_USER_USE_CASE, GetUserUseCase, LoginUserUseCase, PASSWORD_HASHER, RegisterUserUseCase, TOKEN_GENERATOR, UpdateProfileDto, UpdateProfileUseCase, VerifyEmailUseCase } from './applications';
 import { USER_REPOSITORY } from './domain';
 import { UserRepository } from './infrastructure/persistence/typeorm/repository/user.repository';
 import { BcryptPasswordHasher } from './infrastructure/persistence/security/bcrypt-password-hasher';
@@ -55,7 +55,8 @@ import { JwtTokenGenerator } from './infrastructure/persistence/security/jwt-tok
     RegisterUserUseCase,
     LoginUserUseCase,
     GetUserUseCase,
-
+    VerifyEmailUseCase,
+    UpdateProfileUseCase,
     {
       provide: USER_REPOSITORY,
       useClass: UserRepository
