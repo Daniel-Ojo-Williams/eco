@@ -1,7 +1,7 @@
 import { ID, Args, Query, Resolver, Mutation } from "@nestjs/graphql";
 import { UsersGrpcClient } from "../../clients/users/users-grpc.client";
 
-import { UseGuards } from "@nestjs/common";
+import { ParseUUIDPipe, UseGuards } from "@nestjs/common";
 import { JwtAuthGuard } from "../../auth/guards/jwt-auth.guard";
 import { CurrentUser } from "../../auth/decorators/current-user.decorator";
 import { UpdateUserInput } from "../inputs/users/update-user.input";
@@ -18,7 +18,7 @@ export class UserResolver {
 
     @Query(() => User)
     @UseGuards(JwtAuthGuard)
-    async user(@Args("id", { type: () => ID }) id: string): Promise<User> {
+    async user(@Args("id", { type: () => ID }, ParseUUIDPipe) id: string): Promise<User> {
         return await this.userGrpcClient.getUser(id);
     }
 
