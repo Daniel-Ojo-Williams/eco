@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "run-many": "nx run-many -t serve -p users api-gateway"
+    "run-many": "nx run-many -t serve -p users api-gateway",
+    "gen-proto-types": "npx protoc -I ./libs/grpc/src/proto --plugin=protoc-gen-ts_proto=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./libs/grpc/src/types --ts_proto_opt=nestJs=true ./libs/grpc/src/proto/*.proto"
   },
   "private": true,
   "dependencies": {

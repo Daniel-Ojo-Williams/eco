@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package product;
+
+service ProductService {
+    rpc CreateProduct (CreateProductRequest) returns (ProductResponse);
+    rpc GetProduct (GetProductRequest) returns (ProductResponse);
+    rpc UpdateProduct (UpdateProductRequest) returns (ProductResponse);
+    rpc DeleteProduct (DeleteProductRequest) returns (Empty);
+    rpc ListProducts (ListProductsRequest) returns (ProductListResponse);
+    rpc PublishProduct (PublishProductRequest) returns (ProductResponse);
+    rpc UpdateInventory (UpdateInventoryRequest) returns (InventoryResponse);
+    rpc GetInventory (GetInventoryRequest) returns (InventoryResponse);
+    rpc ReserveStock (ReserveStockRequest) returns (InventoryResponse);
+    rpc ReleaseStock (ReleaseStockRequest) returns (InventoryResponse);
+}
+
+message CreateProductRequest {
+    string name = 1;
+    string description = 2;
+    string category = 3;
+    double price = 4;
+    repeated string images = 5;
+    map<string, string> specifications = 6;
+}
+
+message PublishProductRequest {
+    string id = 1;
+}
+
+message UpdateProductRequest {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    string category = 4;
+    double price = 5;
+    repeated string images = 6;
+    map<string, string> specifications = 7;
+}
+
+message GetProductRequest {
+    string id = 1;
+}
+
+message DeleteProductRequest {
+    string id = 1;
+}
+
+message ListProductsRequest {
+    int32 page = 1;
+    int32 limit = 2;
+    string category = 3;
+    string search = 4;
+}
+
+message ProductResponse {
+    string id = 1;
+    string name = 2;
+    string category = 4;
+    double price = 5;
+    repeated string images = 6;
+    map<string, string> specifications = 7;
+    string status = 8;
+    string created_at = 9;
+    string updated_at = 10;
+}
+
+message ProductListResponse {
+    repeated ProductResponse products = 1;
+    int32 total = 2;
+    int32 page = 3;
+    int32 limit = 4;
+}
+
+message UpdateInventoryRequest {
+    string product_id = 1;
+    int32 quantity = 2;
+}
+
+message GetInventoryRequest {
+    string product_id = 1;
+}
+
+message ReserveStockRequest {
+    string product_id = 1;
+    int32 quantity  = 2;
+}
+
+message ReleaseStockRequest {
+    string product_id = 1;
+    int32 quantity  = 2;
+}
+
+message InventoryResponse {
+    string product_id = 1;
+    int32 available_quantity = 2;
+    int32 reserved_quantity = 3;
+    int32 total_quantity = 4;
+    string updated_at = 5;
+}
+
+message Empty {}
