@@ -8,7 +8,7 @@ export default registerAs("pg", () => ({
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    migrations: ["dist/infrastructure/persistence/migrations/*.js"],
+    migrations: ["dist/infrastructure/persistence/typeorm/migrations/*.js"],
     entities: Object.values(Schemas),
     synchronize: true
 }))

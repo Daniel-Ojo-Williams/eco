@@ -66,8 +66,14 @@ export interface UserResponse {
 
 export const USERS_PACKAGE_NAME = "users";
 
+/** UserService provides authentication and user management operations. */
+
 export interface UserServiceClient {
+  /** Register creates a new user account with the provided credentials. */
+
   register(request: RegisterRequest): Observable<UserResponse>;
+
+  /** Login authenticates a user and returns access tokens. */
 
   login(request: LoginRequest): Observable<LoginResponse>;
 
@@ -80,8 +86,14 @@ export interface UserServiceClient {
   validateToken(request: ValidateTokenRequest): Observable<ValidateTokenResponse>;
 }
 
+/** UserService provides authentication and user management operations. */
+
 export interface UserServiceController {
+  /** Register creates a new user account with the provided credentials. */
+
   register(request: RegisterRequest): Promise<UserResponse> | Observable<UserResponse> | UserResponse;
+
+  /** Login authenticates a user and returns access tokens. */
 
   login(request: LoginRequest): Promise<LoginResponse> | Observable<LoginResponse> | LoginResponse;
 

@@ -8,6 +8,8 @@ export class GraphQLExceptionFilter implements GqlExceptionFilter {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response = exception.getResponse() as any;
     const status = exception.getStatus();
+    
+    console.log('Exception caught:', { status, response, exception });
 
     // Map HTTP status to GraphQL error code
     const errorCode = this.getErrorCode(status);

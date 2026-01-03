@@ -1,12 +1,12 @@
 import { InjectModel } from "@nestjs/mongoose";
 import { IProductRepository } from "../../../domain";
-import { ProductDocument } from "./schemas/product.schema";
+import { PRODUCT_COLLECTION_NAME, ProductDocument } from "./schemas/product.schema";
 import { Model } from "mongoose";
 import { Product } from "../../../domain";
 import { ProductMapper } from "./mappers/products.mapper";
 
 export class ProductRepository implements IProductRepository {
-    constructor(@InjectModel(ProductDocument.name) private readonly productModel: Model<ProductDocument>) {}
+    constructor(@InjectModel(PRODUCT_COLLECTION_NAME) private readonly productModel: Model<ProductDocument>) {}
 
     async save(product: Product) {
         const doc = ProductMapper.toDocument(product);
@@ -30,13 +30,21 @@ export class ProductRepository implements IProductRepository {
         return docs.map(doc => ProductMapper.toDomain(doc));
     }
 
-    async findAll(options?: { limit?: number; page?: number; }) {
+    async findAll(options?: { limit?: number; page?: number; category?: string; search?: string }) {
         const page = options?.page ? options.page : 1;
         const limit = options?.limit ? options.limit : 10;
         const skip = (page - 1) * limit;
         const [docs, total] = await Promise.all([
-            this.productModel.find().limit(limit).skip(skip).exec(),
-            this.productModel.countDocuments().exec(),
+            this.productModel.find({
+                 ...(options?.category && { category: options?.category }), 
+                 ...(options?.search && { $text: { $search: options?.search } }),
+            }).sort(
+                options?.search ? { score: { $meta: "textScore" } } : { createdAt: -1 }
+            ).limit(limit).skip(skip).exec(),
+            this.productModel.countDocuments({
+                 ...(options?.category && { category: options?.category }), 
+                 ...(options?.search && { $text: { $search: options?.search } })
+            }).exec(),
         ]);
         const products = docs.map(doc => ProductMapper.toDomain(doc));
         return { products, total, page };

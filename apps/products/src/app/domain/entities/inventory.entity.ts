@@ -1,3 +1,5 @@
+import { InventoryReservedStockInsufficientException, InventoryStockInsufficientException } from "../exceptions/domain.exception";
+
 interface InventoryProps {
     productId: string;
     availableQuantity: number;
@@ -34,7 +36,7 @@ export class Inventory {
         this.validateQuantity(quantity);
         
         if (quantity > this.props.availableQuantity) {
-            throw new Error(`Cannot reserve ${quantity}. Only ${this.props.availableQuantity} available.`);
+            throw new InventoryStockInsufficientException(this.props.availableQuantity, quantity);
         }
 
         this.props.availableQuantity -= quantity;
@@ -46,7 +48,7 @@ export class Inventory {
         this.validateQuantity(quantity);
         
         if (quantity > this.props.reservedQuantity) {
-            throw new Error(`Cannot release ${quantity}. Only ${this.props.reservedQuantity} reserved.`);
+            throw new InventoryReservedStockInsufficientException(this.props.reservedQuantity, quantity);;
         }
 
         this.props.availableQuantity += quantity;

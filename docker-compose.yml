@@ -18,6 +18,36 @@ services:
       retries: 5
       start_period: 10s
 
+  postgres-inventory:
+    image: postgres:17-alpine
+    container_name: eco-postgres-inventory
+    environment:
+      POSTGRES_DB: inventory_db
+      POSTGRES_USER: inventory_service
+      POSTGRES_PASSWORD: inventory_password
+    ports:
+      - "5568:5432"
+    volumes:
+      - postgres-inventory-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "inventory_service", "-d", "inventory_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  mongodb-products:
+    image: mongo:latest
+    container_name: eco-mongodb-product
+    hostname: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: product_service
+      MONGO_INITDB_ROOT_PASSWORD: product_password
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-products-data:/data/db
+
   redis:
     image: redis:7-alpine
     container_name: eco-redis
@@ -36,3 +66,5 @@ services:
 volumes:
   postgres-user-data:
   redis-data:
+  postgres-inventory-data:
+  mongodb-products-data:

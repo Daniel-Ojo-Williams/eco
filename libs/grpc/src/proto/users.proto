@@ -2,8 +2,11 @@ syntax = "proto3";
 
 package users;
 
+// UserService provides authentication and user management operations.
 service UserService {
+    // Register creates a new user account with the provided credentials.
     rpc Register (RegisterRequest) returns (UserResponse);
+    // Login authenticates a user and returns access tokens.
     rpc Login (LoginRequest) returns (LoginResponse);
     rpc GetUser(GetUserRequest) returns (UserResponse);
     rpc UpdateProfile (UpdateProfileRequest) returns (UserResponse);

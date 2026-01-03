@@ -2,16 +2,27 @@ syntax = "proto3";
 
 package product;
 
+// ProductService provides product and inventory management operations
 service ProductService {
+    // CreateProduct creates a new product
     rpc CreateProduct (CreateProductRequest) returns (ProductResponse);
+    // GetProduct retrieves a product by ID
     rpc GetProduct (GetProductRequest) returns (ProductResponse);
+    // UpdateProduct updates an existing product
     rpc UpdateProduct (UpdateProductRequest) returns (ProductResponse);
+    // DeleteProduct removes a product
     rpc DeleteProduct (DeleteProductRequest) returns (Empty);
+    // ListProducts retrieves a paginated list of products
     rpc ListProducts (ListProductsRequest) returns (ProductListResponse);
+    // PublishProduct publishes a product
     rpc PublishProduct (PublishProductRequest) returns (ProductResponse);
+    // UpdateInventory updates product inventory quantity
     rpc UpdateInventory (UpdateInventoryRequest) returns (InventoryResponse);
+    // GetInventory retrieves current inventory status
     rpc GetInventory (GetInventoryRequest) returns (InventoryResponse);
+    // ReserveStock reserves stock for a product
     rpc ReserveStock (ReserveStockRequest) returns (InventoryResponse);
+    // ReleaseStock releases reserved stock
     rpc ReleaseStock (ReleaseStockRequest) returns (InventoryResponse);
 }
 
@@ -22,6 +33,7 @@ message CreateProductRequest {
     double price = 4;
     repeated string images = 5;
     map<string, string> specifications = 6;
+    int32 initial_stock = 7;
 }
 
 message PublishProductRequest {
@@ -63,6 +75,7 @@ message ProductResponse {
     string status = 8;
     string created_at = 9;
     string updated_at = 10;
+    string description = 11;
 }
 
 message ProductListResponse {

@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@eco/common": ["libs/common/src/index.ts"],
-      "@eco/grpc": ["libs/grpc/src/index.ts"]
+      "@eco/grpc": ["libs/grpc/src/index.ts"],
+      "@eco/products": ["apps/products/src"]
     }
   },
   "exclude": ["node_modules", "tmp", "dist"]

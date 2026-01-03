@@ -6,6 +6,9 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { join } from "path";
 import { AuthModule } from "../auth/auth.module";
 import { UsersGrpcModule } from "../clients/users/users-grpc.module";
+import { ProductsGrpcModule } from "../clients/products/products-grpc.module";
+import { ProductResolver } from "./resolvers/products.resolver";
+import GraphQLJSON from "graphql-type-json";
 
 @Module({
     imports: [
@@ -13,6 +16,7 @@ import { UsersGrpcModule } from "../clients/users/users-grpc.module";
             driver: ApolloDriver,
             autoSchemaFile: join(__dirname, '/graphql/schema.gql'),
             playground: false,
+            resolvers: { JSON: GraphQLJSON },
             context: (({ req, res }) => ({ req, res })),
             formatError: (error) => {
                 return {
@@ -23,11 +27,13 @@ import { UsersGrpcModule } from "../clients/users/users-grpc.module";
             }
         }),
         AuthModule,
-        UsersGrpcModule
+        UsersGrpcModule,
+        ProductsGrpcModule,
     ],
     providers: [
         AuthResolver,
-        UserResolver
+        UserResolver,
+        ProductResolver
     ]
 })
 export class EcoGraphQLModule {}

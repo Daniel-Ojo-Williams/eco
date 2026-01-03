@@ -17,6 +17,7 @@ export interface CreateProductRequest {
   price: number;
   images: string[];
   specifications: { [key: string]: string };
+  initialStock: number;
 }
 
 export interface CreateProductRequest_SpecificationsEntry {
@@ -68,6 +69,7 @@ export interface ProductResponse {
   status: string;
   createdAt: string;
   updatedAt: string;
+  description: string;
 }
 
 export interface ProductResponse_SpecificationsEntry {
@@ -114,60 +116,104 @@ export interface Empty {
 
 export const PRODUCT_PACKAGE_NAME = "product";
 
+/** ProductService provides product and inventory management operations */
+
 export interface ProductServiceClient {
+  /** CreateProduct creates a new product */
+
   createProduct(request: CreateProductRequest): Observable<ProductResponse>;
+
+  /** GetProduct retrieves a product by ID */
 
   getProduct(request: GetProductRequest): Observable<ProductResponse>;
 
+  /** UpdateProduct updates an existing product */
+
   updateProduct(request: UpdateProductRequest): Observable<ProductResponse>;
+
+  /** DeleteProduct removes a product */
 
   deleteProduct(request: DeleteProductRequest): Observable<Empty>;
 
+  /** ListProducts retrieves a paginated list of products */
+
   listProducts(request: ListProductsRequest): Observable<ProductListResponse>;
+
+  /** PublishProduct publishes a product */
 
   publishProduct(request: PublishProductRequest): Observable<ProductResponse>;
 
+  /** UpdateInventory updates product inventory quantity */
+
   updateInventory(request: UpdateInventoryRequest): Observable<InventoryResponse>;
+
+  /** GetInventory retrieves current inventory status */
 
   getInventory(request: GetInventoryRequest): Observable<InventoryResponse>;
 
+  /** ReserveStock reserves stock for a product */
+
   reserveStock(request: ReserveStockRequest): Observable<InventoryResponse>;
+
+  /** ReleaseStock releases reserved stock */
 
   releaseStock(request: ReleaseStockRequest): Observable<InventoryResponse>;
 }
 
+/** ProductService provides product and inventory management operations */
+
 export interface ProductServiceController {
+  /** CreateProduct creates a new product */
+
   createProduct(
     request: CreateProductRequest,
   ): Promise<ProductResponse> | Observable<ProductResponse> | ProductResponse;
 
+  /** GetProduct retrieves a product by ID */
+
   getProduct(request: GetProductRequest): Promise<ProductResponse> | Observable<ProductResponse> | ProductResponse;
+
+  /** UpdateProduct updates an existing product */
 
   updateProduct(
     request: UpdateProductRequest,
   ): Promise<ProductResponse> | Observable<ProductResponse> | ProductResponse;
 
+  /** DeleteProduct removes a product */
+
   deleteProduct(request: DeleteProductRequest): Promise<Empty> | Observable<Empty> | Empty;
+
+  /** ListProducts retrieves a paginated list of products */
 
   listProducts(
     request: ListProductsRequest,
   ): Promise<ProductListResponse> | Observable<ProductListResponse> | ProductListResponse;
 
+  /** PublishProduct publishes a product */
+
   publishProduct(
     request: PublishProductRequest,
   ): Promise<ProductResponse> | Observable<ProductResponse> | ProductResponse;
+
+  /** UpdateInventory updates product inventory quantity */
 
   updateInventory(
     request: UpdateInventoryRequest,
   ): Promise<InventoryResponse> | Observable<InventoryResponse> | InventoryResponse;
 
+  /** GetInventory retrieves current inventory status */
+
   getInventory(
     request: GetInventoryRequest,
   ): Promise<InventoryResponse> | Observable<InventoryResponse> | InventoryResponse;
 
+  /** ReserveStock reserves stock for a product */
+
   reserveStock(
     request: ReserveStockRequest,
   ): Promise<InventoryResponse> | Observable<InventoryResponse> | InventoryResponse;
+
+  /** ReleaseStock releases reserved stock */
 
   releaseStock(
     request: ReleaseStockRequest,

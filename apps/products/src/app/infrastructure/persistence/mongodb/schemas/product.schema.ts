@@ -2,7 +2,9 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { ProductStatus } from "../../../../domain/value-objects/product-status.vo"; 
 import { HydratedDocument } from "mongoose";
 
-@Schema({ collection: "products", timestamps: true })
+export const PRODUCT_COLLECTION_NAME = "products";
+
+@Schema({ collection: PRODUCT_COLLECTION_NAME, timestamps: true })
 export class ProductDocument {
     @Prop({ required: true })
     _id: string;
